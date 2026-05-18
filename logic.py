@@ -63,6 +63,26 @@ class DatabaseManager:
         self.__executemany(sql, data)
 
 
+    def get_specialist(self):
+        sql = "SELECT specialist from specialists"
+        return self.__select_data(sql)
+    
+
+    def get_specialist_id(self, specialist_name):
+            sql = 'SELECT id FROM specialists WHERE specialist = ?'
+            res = self.__select_data(sql, (specialist_name,))
+            if res:
+                return res[0][0]
+            else:
+                return None
+            
+
+if __name__ == '__main__':
+    manager = DatabaseManager(database)
+    manager.create_tables()
+    manager.default_insert()
+
+
     
 
 
