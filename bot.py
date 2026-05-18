@@ -7,6 +7,9 @@ bot = telebot.TeleBot(token)
 
 
 
+
+
+
 cancel_button = "Отмена 🚫"
 def gen_markup(rows):
     markup = ReplyKeyboardMarkup(one_time_keyboard=True)
@@ -81,14 +84,14 @@ def name_q(message):
     bot.register_next_step_handler(message, callback_quest, data=data, specialists=specialists)
 
 
-def callback_quest(message, data, statuses):
+def callback_quest(message, data, specialists):
     specialist = message.text
     if message.text == cancel_button:
         specialist(message)
         return
     if specialist not in specialists:
         bot.send_message(message.chat.id, "Ты выбрал специалиста не из списка, попробуй еще раз!)",
-        reply_markup=gen_markup(statuses))
+        reply_markup=gen_markup(specialists))
         bot.register_next_step_handler(message, callback_quest, data=data, specialists=specialists)
         return
     specialist = manager.get_specialist_id(specialist) #доработать get_specialist_id в лоджик
